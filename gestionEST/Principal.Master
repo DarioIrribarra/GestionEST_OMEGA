@@ -1,0 +1,60 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="Principal.master.vb" Inherits="gestionEST.Principal" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div id="cabecera">
+            <div id="titulosCabecera">
+                <div id="titulo">
+                    <h2>Plataforma de Servicios</h2>
+                </div>
+
+                <div id="logo">
+                    <img src="/images/logowebest.png" alt="logo EST" width="233" height="60" />
+
+                </div>    
+                 
+
+            </div>
+            <asp:ContentPlaceHolder ID="ContenidoCabecera" runat="server">
+        
+            </asp:ContentPlaceHolder>
+
+        </div>
+
+        <div id="menu">
+            <div id="descMenu">
+
+            </div>
+
+            <asp:ContentPlaceHolder ID="ContenidoMenu" runat="server">
+        
+            </asp:ContentPlaceHolder>
+        </div>
+
+        <div id="cuerpo">
+
+            <asp:ContentPlaceHolder ID="ContenidoPrincipal" runat="server">
+        
+            </asp:ContentPlaceHolder>
+
+        </div>
+
+        <div id="pie">
+
+
+        </div>
+
+
+    </div>
+    </form>
+</body>
+</html>

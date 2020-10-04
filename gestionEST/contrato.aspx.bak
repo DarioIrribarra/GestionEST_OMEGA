@@ -1,0 +1,45 @@
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/MPSistema.master"  CodeBehind="contrato.aspx.vb" Inherits="gestionEST.contrato" %>
+
+<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+<%@ Register assembly="DevExpress.Web.ASPxRichEdit.v17.1, Version=17.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxRichEdit" tagprefix="dx" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="AreaCabecera" runat="server">
+
+</asp:Content>
+
+
+<asp:Content ID="Content2" ContentPlaceHolderID="AreaMenu" runat="server">
+
+        <p style=" font-family: Arial; font-size:22px; position:absolute ;left:900px;width:400px;margin-top:5px;"><b>Contrato del Trabajador</b>
+        </p>
+
+</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="AreaTrabajo" runat="server">
+  
+      <dx:ASPxRichEdit ID="RichEdit" runat="server" Width="1300px" Height="700px" 
+        ReadOnly="True" RibbonMode="OneLineRibbon" ShowStatusBar="False"
+        Settings-HorizontalRuler-Visibility="Hidden" ShowConfirmOnLosingChanges="False"
+        WorkDirectory="~\App_Data\documentos">
+          <RibbonTabs>
+              <dx:RERFileTab>
+                  <Groups>
+                      <dx:RERFileCommonGroup>
+                          <Items>
+                              <dx:RERPrintCommand Size="Large">
+                              </dx:RERPrintCommand>
+                          </Items>
+                      </dx:RERFileCommonGroup>
+                  </Groups>
+              </dx:RERFileTab>
+          </RibbonTabs>
+          <SettingsDocumentSelector>
+              <EditingSettings DownloadedArchiveName="contrato" />
+          </SettingsDocumentSelector>
+<Settings Unit="Centimeter">
+<HorizontalRuler Visibility="Hidden"></HorizontalRuler>
+</Settings>
+    </dx:ASPxRichEdit>
+
+</asp:Content>
+

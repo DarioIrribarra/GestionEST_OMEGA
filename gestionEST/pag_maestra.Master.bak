@@ -1,0 +1,369 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="pag_maestra.master.vb" Inherits="gestionEST.pag_maestra" %>
+
+<%@ Register Assembly="DevExpress.Web.v18.1, Version=18.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>San Cristóbal RRHH</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="Content/sidebar.css" rel="stylesheet">
+
+    <%--Font Awesome--%>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        body {
+            padding: 0;
+            margin: 0;
+            overflow-x: auto;
+            min-height: 240px;
+            min-width: 250px;
+        }
+
+        .title {
+        }
+
+        .expandedPanel .title {
+            display: none;
+        }
+
+        .mainMenu {
+            float: right !important;
+            margin: 8px 0 4px;
+        }
+
+        .expandedPanel .mainMenu {
+            width: 100%;
+        }
+
+        .grid,
+        .grid .dxgvHSDC,
+        .grid .dxgvCSD {
+            border-left: 0 !important;
+            border-right: 0 !important;
+            border-bottom: 0 !important;
+        }
+
+        .imagenSplitter {
+            background-image:url("images/31.png");
+            background-repeat:no-repeat;
+            display:inline-block;
+            width: 35px;
+            height: 34px;
+        }
+
+        .menuCentrado {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        .ajuste_img {
+            object-fit:contain;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        function AbrirPopUpDescarga(s, e) {
+            var itemDescarga = menuIzquierdo.GetSelectedItem().GetText();
+            if (itemDescarga == 'Documentos RRHH') {
+                lpCallBackEST.Show();
+                cbpDescargarArchivosEST.PerformCallback();
+            }
+        }
+    </script>
+    <form id="form1" runat="server">
+        <asp:Button Visible="false" UseSubmitBehavior="false" ID="btnDefault" runat="server" />
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <%--PARTE SUPERIOR--%>
+            <dx:ASPxPanel ID="TopPanel" BorderBottom-BorderStyle="none" runat="server" FixedPosition="WindowTop"
+                ClientInstanceName="TopPanel" CssClass="topPanel" Collapsible="true">
+                <Styles ExpandedPanel-Wrap="True">
+                    <ExpandBar Wrap="True">
+                    </ExpandBar>
+                    <ExpandedPanel CssClass="expandedPanel">
+                        <Paddings Padding="0" />
+                    </ExpandedPanel>
+                </Styles>
+                <SettingsAdaptivity CollapseAtWindowInnerWidth="1050" />
+                <PanelCollection>
+                    <dx:PanelContent runat="server" SupportsDisabledAttribute="True">
+                        <div class="w-100">
+                            <div class="d-inline-flex">
+                                <%--                        <div class="title d-inline-flex" style="margin-top: -10px; margin-left: -10px;">--%>
+                                <div class="title  p-0 " style="width: 212px; background-color: white; margin-left: -10px; margin-top: -10px; margin-bottom: -10px">
+                                    <img class="title w-100 h-100" style="padding-top: 20px; padding-bottom: 20px; padding-left: 10px; padding-right: 20px"
+                                        src="images/logo_azul_Gestion.png" />
+                                    <%--                            </div>--%>
+                                </div>
+                            </div>
+                            <div class=" d-inline-flex">
+                                <div class="title" style="margin-left: 6px; padding-left: 10px; padding-bottom: 0px; margin-bottom: -8px; padding-top: 0px; background-color: transparent; color: #00489e">
+                                    <h3 class="title p-0"><b>Software Gestión de Documentos</b></h3>
+                                </div>
+
+                            </div>
+                            <div class="d-inline-flex float-right">
+                                <div class="">
+                                    <table class=" table-responsive-sm" border="0">
+                                        <tr>
+                                            <td>
+                                                <asp:Image CssClass="ajuste_img" ID="Image1" runat="server" ImageUrl="images/10.png" Style="padding-right: 10px;" />
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="margin-right: 5px">
+                                                            <span style="color: #00489e">Empresa&nbsp: </span>
+                                                        </td>
+                                                        <td style="margin-right: 5px">
+                                                            <label style="color: #00489e; margin-bottom: 0px" id="lblNombreEmpresa" runat="server">Nombre de la Empresa</label>
+                                                        </td>
+                                                        <td style="border-left: 1px solid; border-left-color: #00489e; padding-left: 20px">
+                                                            <button type="button" class="boton_sesion" style="color: #00489e; margin-bottom: 3px" runat="server" id="btnCerrarSesion" name="btnCerrarSesion" onserverclick="btnCerrarSesion_ServerClick">
+                                                                <i class="fas fa-user"></i>&nbsp Cerrar Sesión
+                                                            </button>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="margin-right: 5px">
+                                                            <span style="color: #00489e">Usuario &nbsp&nbsp: </span>
+                                                        </td>
+                                                        <td style="margin-right: 5px; padding-right: 10px">
+                                                            <label style="color: #00489e; margin-bottom: 0px" id="txtUsuario" runat="server">Nombre del Usuario</label>
+
+                                                        </td>
+                                                        <td style="border-left: 1px solid; border-left-color: #00489e; padding-left: 20px">
+                                                            <button type="button" id="btnCambioClave" runat="server" style="color: #00489e" class="boton_sesion" onserverclick="btnCambioClave_ServerClick"><i class="fas fa-key"></i>&nbsp Cambiar Clave</button></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </dx:PanelContent>
+                </PanelCollection>
+                <ExpandBarTemplate>
+                    <img width="150" style="padding-right: 3px;" src="images/logo_azul_Gestion.png" />
+                    <div class="title d-inline-flex" style="background-color: #f8f8f9; color: #00489e">
+                        <h4 class=""><b>Gestión Documentos</b></h4>
+                    </div>
+                    <%--<div class="title" style="margin: -7px; background-color: #f8f8f9">
+                        <img width="150" style="padding-right: 3px; background-color:white" src="images/logo1.png" />
+                        <div class="title d-inline-flex" style="background-color: #f8f8f9; color: #00489e">
+                            <h3 class=""><b>Plataforma de Servicios y Documentos</b></h3>
+                        </div>
+                    </div>--%>
+                </ExpandBarTemplate>
+            </dx:ASPxPanel>
+            <%--PARTE IZQUIERDA--%>
+            <dx:ASPxPanel Font-Names="verdana" Width="210" BorderRight-BorderStyle="None" ID="LeftPanel" BackColor="White" runat="server" FixedPosition="WindowLeft"
+                Collapsible="true">
+                <SettingsAdaptivity CollapseAtWindowInnerWidth="1050" />
+
+                <PanelCollection>
+                    <dx:PanelContent runat="server" SupportsDisabledAttribute="True">
+                        <dx:ASPxMenu Font-Names="verdana" ItemWrap="true" 
+                            ItemStyle-Border-BorderStyle="None"
+                            Border-BorderStyle="none" 
+                            Border-BorderColor="Transparent"
+                            ItemStyle-HoverStyle-Border-BorderStyle="None"
+                            ItemStyle-HoverStyle-BackColor="White"
+                            ItemStyle-Paddings-PaddingBottom="10px"
+                            ItemStyle-Font-Bold="false"  
+                            BackColor="Transparent" 
+                            ID="ASPxMenu1" ClientInstanceName="menuIzquierdo" Orientation="Vertical" 
+                            ItemStyle-CheckedStyle-Font-Bold="true" AllowSelectItem="true"
+                            ItemStyle-Font-Size="Medium" ItemStyle-ForeColor="#00489e" runat="server">
+                            <ClientSideEvents ItemClick="AbrirPopUpDescarga" />
+                            <ItemStyle
+                                HorizontalAlign="Left"
+                                VerticalAlign="Middle"
+                                SelectedStyle-Font-Bold="true"
+                                SelectedStyle-Font-Size="Medium"
+                                SelectedStyle-BackgroundImage-HorizontalPosition="right"
+                                SelectedStyle-BackgroundImage-ImageUrl="images/01.png"
+                                SelectedStyle-BackgroundImage-Repeat="NoRepeat"
+                                SelectedStyle-BackgroundImage-VerticalPosition="center"
+                                Border-BorderColor="White" />
+                            <%--AL PASAR POR ENCIMA--%>
+                            <ItemStyle
+                                HoverStyle-BackColor="#d0d0d0" />
+                            <Items>
+                                <dx:MenuItem Text="Empresa" NavigateUrl="pag_empresa.aspx">
+                                </dx:MenuItem>
+                                <dx:MenuItem Text="Requerimientos" NavigateUrl="pag_requerimientos.aspx">
+                                </dx:MenuItem>
+                                <dx:MenuItem Text="Colaboradores" NavigateUrl="pag_colaboradores.aspx">
+                                </dx:MenuItem>
+                                <dx:MenuItem Text="Contrataciones" NavigateUrl="pag_contrataciones.aspx" Name="contrataciones">
+                                </dx:MenuItem>
+                                <dx:MenuItem Text="Reportabilidad" NavigateUrl="pag_reportes.aspx">
+                                </dx:MenuItem>
+                                <dx:MenuItem Text="Auditoría" NavigateUrl="pag_auditoria.aspx" Name="auditoria">
+                                </dx:MenuItem>
+                                <dx:MenuItem Text="Perfil" NavigateUrl="pag_seguridad.aspx">
+                                </dx:MenuItem>
+                                <dx:MenuItem Text="Documentos RRHH" Name="descarga">
+                                </dx:MenuItem>
+                            </Items>
+
+                        </dx:ASPxMenu>
+                        <dx:ASPxLoadingPanel runat="server" ID="lpCallBackEST" Text="Cargando..." ClientInstanceName="lpCallBackEST" Modal="true"  Theme="MetropolisBlue"></dx:ASPxLoadingPanel>
+                    </dx:PanelContent>
+                </PanelCollection>
+            </dx:ASPxPanel>
+            <!-- POPUP CARGA ARCHIVOS-->
+            <table>
+                <tr>
+                    <td>
+                        <dx:ASPxHiddenField runat="server" ID="ASPxHiddenField1" ClientInstanceName="HiddenField"></dx:ASPxHiddenField>
+                        <dx:ASPxCallbackPanel runat="server" ID="cbpDescargarArchivosEST" ClientInstanceName="cbpDescargarArchivosEST" OnCallback="cbpDescargarArchivosEST_Callback">
+                            <ClientSideEvents EndCallback="function(s,e) {popUpDescargarArchivosEST.Show(); lpCallBackEST.Hide();}" />
+                            <PanelCollection>
+                                <dx:PanelContent>
+                                    <dx:ASPxPopupControl ID="popUpDescargarArchivosEST" runat="server" CloseAction="CloseButton" ClientInstanceName="popUpDescargarArchivosEST" EnableViewState="False"
+                                        Modal="True" Width="600px" HeaderText="Documentos San Cristóbal RRHH" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Theme="Metropolis" ShowPageScrollbarWhenModal="True">
+                                        <HeaderStyle Font-Names="verdana" BackColor="#00489e" HorizontalAlign="Center" Font-Bold="true" ForeColor="White" />
+                                        <ContentCollection>
+                                            <dx:PopupControlContentControl runat="server">
+                                                <dx:ASPxPanel ID="ASPxPanel1" runat="server">
+                                                    <PanelCollection>
+                                                        <dx:PanelContent runat="server">
+                                                            <table>
+
+                                                                <!-- COMBOBOX TIPO DOCUMENTO-->
+                                                                <tr>
+                                                                    <td class="pcmCellCaption">
+                                                                        <dx:ASPxLabel CssClass="font-weight-bold" ForeColor="#00489e" Font-Names="verdana" ID="ASPxLabel6" runat="server" Text="Tipo Docto">
+                                                                        </dx:ASPxLabel>
+                                                                    </td>
+                                                                    <td class="pcmCellCaption">:</td>
+                                                                    <td class="pcmCellText">
+                                                                        <dx:ASPxComboBox ForeColor="#00489e" Font-Names="verdana" CssClass="rounded" Theme="MetropolisBlue" ID="cbxDescargarDocumentoEST" runat="server" Width="350px" ValueType="System.String" ClientInstanceName="cbxDescargarDocumentoEST">
+                                                                            <DropDownButton Image-Url="images/arrow-point-to-down.png"></DropDownButton>
+                                                                            <Items>
+                                                                                <dx:ListEditItem Text="Todos los Documentos" Value="0" Selected="true" />
+                                                                                <dx:ListEditItem Text="Carta Ausencia a Trabajar" Value="1" />
+                                                                                <dx:ListEditItem Text="Carta Vencimiento de Plazo" Value="2" />
+                                                                                <dx:ListEditItem Text="Comprobante Entrega EPP" Value="3" />
+                                                                                <dx:ListEditItem Text="Ficha Personal EST" Value="4" />
+                                                                                <dx:ListEditItem Text="Inducción S&SSO" Value="5" />
+                                                                                <dx:ListEditItem Text="Inspeccion de EPP y Ropa de Trabajo" Value="6" />
+                                                                                <dx:ListEditItem Text="Observacion de Conducta" Value="7" />
+                                                                                <dx:ListEditItem Text="No aplica Documentos – General" Value="8" />
+                                                                                <dx:ListEditItem Text="No aplica Documentos – Individual" Value="9" />
+                                                                                <dx:ListEditItem Text="ODI – Obligación de Informar" Value="10" />
+                                                                                <dx:ListEditItem Text="Contrato Marco – Arauco" Value="11" />
+                                                                                <dx:ListEditItem Text="Contrato Marco – Masonite" Value="12" />
+                                                                                <dx:ListEditItem Text="Contrato Marco – Oxiquim" Value="13" />
+                                                                                <dx:ListEditItem Text="Contrato Marco – RMD Kwikform" Value="14" />
+                                                                            </Items>
+                                                                        </dx:ASPxComboBox>
+                                                                    </td>
+
+                                                                </tr>
+
+                                                                <!-- BOTONES -->
+                                                                <tr>
+                                                                    <td style="width: 10px">
+                                                                        <div class="pcmSideSpacer ">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td colspan="3">
+                                                                        <div class="pcmButton d-flex justify-content-center">
+                                                                            <dx:ASPxButton Font-Names="verdana" EnableTheming="false" CssClass="rounded txtbox text-white font-weight-bold" Style="float: left; margin-right: 8px; background-color: #ff1049;" Width="80px" Height="30px" ID="btnDescargarEST" runat="server" Text="Descargar" OnClick="btnDescargarEST_Click" AutoPostBack="false" UseSubmitBehavior="false">
+                                                                            </dx:ASPxButton>
+
+                                                                            <dx:ASPxButton Font-Names="verdana" EnableTheming="false" CssClass="rounded txtbox text-white font-weight-bold" Style="float: left; margin-right: 8px; background-color: #ff1049;" Width="80px" Height="30px" ID="ASPxButton2" runat="server" Text="Cerrar" AutoPostBack="false" UseSubmitBehavior="false">
+                                                                                <ClientSideEvents Click="function(s, e) { popUpDescargarArchivosEST.Hide();}" />
+                                                                            </dx:ASPxButton>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </dx:PanelContent>
+                                                    </PanelCollection>
+                                                </dx:ASPxPanel>
+                                            </dx:PopupControlContentControl>
+                                        </ContentCollection>
+                                    </dx:ASPxPopupControl>
+                                </dx:PanelContent>
+                            </PanelCollection>
+                        </dx:ASPxCallbackPanel>
+                    </td>
+                </tr>
+            </table>
+
+            <%--PARTE DERECHA--%>
+            <dx:ASPxSplitter ID="ASPxSplitter1" Border-BorderStyle="None" FullscreenMode="true" runat="server" Height="100%" Width="100%">
+                <Panes>
+                    <dx:SplitterPane ShowCollapseBackwardButton="True" Size="20%" MinSize="178" MaxSize="178" AutoHeight="true">
+                        <PaneStyle BackColor="#00489e">
+                        </PaneStyle>
+                        <ContentCollection>
+                            <dx:SplitterContentControl>
+                                <%--BARRA AZUL--%>
+                                <asp:ContentPlaceHolder ID="Barra_Azul" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </dx:SplitterContentControl>
+
+                        </ContentCollection>
+                    </dx:SplitterPane>
+                    <dx:SplitterPane Size="80%" AutoWidth="true">
+                        <PaneStyle>
+                        </PaneStyle>
+                        <ContentCollection>
+                            <dx:SplitterContentControl BorderStyle="None" Height="100%">
+                                <%--Contenido de página--%>
+                                <asp:ContentPlaceHolder ID="ContenidoPagina" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </dx:SplitterContentControl>
+
+                        </ContentCollection>
+                    </dx:SplitterPane>
+                </Panes>
+            </dx:ASPxSplitter>
+
+            <!-- Bootstrap core JavaScript -->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+            <!-- Menu Toggle Script -->
+            <script>
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
+            </script>
+        </div>
+        <%--<asp:TextBox Style="text-align: right; font-size: 13px; position: absolute; left: 900px; width: 400px; margin-top: 29px;"
+            ID="txtUsuario" runat="server"
+            BackColor="Transparent" BorderStyle="None" ForeColor="White" ReadOnly="True">
+
+        </asp:TextBox>--%>
+    </form>
+</body>
+</html>

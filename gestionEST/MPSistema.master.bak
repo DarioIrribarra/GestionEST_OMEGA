@@ -1,0 +1,111 @@
+﻿<%@ Master Language="VB" MasterPageFile="~/Principal.Master" AutoEventWireup="false" CodeBehind="MPSistema.master.vb" Inherits="gestionEST.MPSistema" %>
+<%@ Register assembly="DevExpress.Web.v18.1, Version=18.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <style type="text/css">
+        .auto-style1 {
+            
+            width: 1200px;
+            height: 16px;
+        }
+        
+    </style>
+
+</asp:Content>
+ 
+<asp:Content ID="Content2" ContentPlaceHolderID="ContenidoCabecera" runat="server">
+   
+     <asp:TextBox style=" text-align:right; font-size:13px; position:absolute ;left:900px;width:400px;margin-top:29px;" ID="txtUsuario" runat="server" BackColor="Transparent"  BorderStyle="None" ForeColor="White" ReadOnly="True"></asp:TextBox>
+
+
+     <table class="dx-justification" style="float:left;position: absolute; margin-top:45px;">
+         <tr>
+             <td class="auto-style1"></td>
+             <td >
+                <dx:ASPxButton ID="btnCerrarSesion" runat="server" Font-Size="X-Small" Text="Cerrar Sesion" height="14px" BackColor="Transparent" Border-BorderStyle="None" ForeColor="White" EnableTheming="True" RenderMode="Link">
+                     <Image Url="~/images/candado.png">
+                     </Image>
+                 </dx:ASPxButton>
+             </td>
+         </tr>
+     </table>
+
+             <asp:ContentPlaceHolder ID="AreaCabecera" runat="server">
+        
+            </asp:ContentPlaceHolder>
+     </asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="ContenidoMenu" runat="server">
+                    <asp:ContentPlaceHolder ID="AreaMenu" runat="server">
+        
+            </asp:ContentPlaceHolder>
+
+      <dx:ASPxMenu ID="menuPrincipal" runat="server" BackColor="#B70024" BorderBetweenItemAndSubMenu="HideAll" EnableTheming="True" Theme="Moderno">
+          <Items>
+            <dx:MenuItem Text="Empresa" EnableScrolling="True">
+                <Items>
+                    <dx:MenuItem Text="Documentación Legal" NavigateUrl="~/empresa.aspx">
+                    </dx:MenuItem>
+                </Items>
+            </dx:MenuItem>
+            <dx:MenuItem Text="Empleados">
+                <Items>
+                    <dx:MenuItem Text="Documentación" NavigateUrl="~/empleado.aspx">
+                    </dx:MenuItem>
+                </Items>
+            </dx:MenuItem>
+            <dx:MenuItem Text="Contrataciones">
+                <Items>
+                    <dx:MenuItem Text="Gestión de Solicitudes" >
+                    </dx:MenuItem>
+                    <dx:MenuItem Text="Contrato Marco" NavigateUrl="~/contratoMarco.aspx">
+                    </dx:MenuItem>
+                </Items>
+            </dx:MenuItem>
+            <dx:MenuItem Text="Reportes">
+                <Items>
+                    <dx:MenuItem Text="Información de Remuneraciones" NavigateUrl="~/exportarInfo.aspx">
+                    </dx:MenuItem>
+                    <dx:MenuItem Text="Reporte Semanal" NavigateUrl="~/reporteSemanal.aspx">
+                    </dx:MenuItem>
+                    <dx:MenuItem Text="Reporte Dotación Mensual" NavigateUrl="~/reporteDotacionMensual.aspx">
+                    </dx:MenuItem>
+
+                    <dx:MenuItem Text="Reportes en Línea">
+                        <Items>
+                            <dx:MenuItem Text="Dotación" NavigateUrl="~/dotacion.aspx">
+                            </dx:MenuItem>
+                            <dx:MenuItem Text="Dotación por Causal" NavigateUrl="~/dotacionCausal.aspx">
+                            </dx:MenuItem>
+                        </Items>   
+                    </dx:MenuItem>
+
+                </Items>
+                <ItemStyle HorizontalAlign="Center" />
+            </dx:MenuItem>
+            <dx:MenuItem Text="Seguridad">
+                <Items>
+                    <dx:MenuItem Text="Cambiar Clave" NavigateUrl="~/password.aspx">
+                    </dx:MenuItem>
+                </Items>
+            </dx:MenuItem>
+        </Items>
+          <ItemStyle BackColor="#B70024" ForeColor="White">
+          <Border BorderStyle="None" />
+          </ItemStyle>
+          <SubMenuItemStyle BackColor="Black" ForeColor="White">
+              <HoverStyle BackColor="#666666" Font-Bold="False">
+              </HoverStyle>
+          </SubMenuItemStyle>
+          <Border BorderStyle="None" />
+</dx:ASPxMenu>
+
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="ContenidoPrincipal" runat="server">
+                <asp:ContentPlaceHolder ID="AreaTrabajo" runat="server">
+        
+      
+                    
+        
+            </asp:ContentPlaceHolder>
+</asp:Content>

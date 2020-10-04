@@ -1,0 +1,588 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/MPSistema.master" CodeBehind="contratoMarco.aspx.vb" Inherits="gestionEST.contratoMarco" %>
+
+<%@ Register assembly="DevExpress.Web.v17.1, Version=17.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="AreaCabecera" runat="server">
+
+
+
+
+</asp:Content>
+
+
+
+<asp:Content ID="Content2" ContentPlaceHolderID="AreaMenu" runat="server">
+
+        <p style=" font-family: Arial; font-size:22px; position:absolute ;left:900px;width:400px;margin-top:5px;"><b>Contrato Marco</b>
+        </p>
+
+
+</asp:Content>
+
+
+
+<asp:Content ID="Content3" ContentPlaceHolderID="AreaTrabajo" runat="server">
+    <script type="text/javascript">
+
+        function NuevoContrato(s, e) {
+            e.processOnServer = true;
+        }
+
+        function AsociaContrato(s, e) {
+            e.processOnServer = true;
+        }
+
+
+        function BorraContrato(s, e) {
+            if (confirm('¿Seguro que desea borrar contrato seleccionado?')) {
+                e.processOnServer = true;
+            }
+            else {
+                e.processOnServer = false;
+            }
+         }
+
+
+        function OnClickGrabar(s, e) {
+            e.processOnServer = true;
+        }
+
+        function OnClickOkAsociar(s, e) {
+            e.processOnServer = true;
+        }
+
+        function OnClickGrabarAsociar(s, e) {
+            e.processOnServer = true;
+        }
+
+        function jsCalculaFechaFin() {
+
+            var days = txtDias.GetNumber();
+            if (days > 0) {
+                var dateObject = new Date();
+                dateObject = txtFechaIni.GetDate();
+                dateObject = new Date(dateObject.valueOf());
+                dateObject.setDate(dateObject.getDate() + days - 1);
+                txtFechaFin.SetDate(dateObject);
+            }
+        }
+
+        function jsCalculaDias() {
+
+            var fechaini = new Date();
+            var fechafin = new Date();
+            fechaini = txtFechaIni.GetDate();
+            fechafin = txtFechaFin.GetDate();
+            var timeDiff = (fechafin.getTime() - fechaini.getTime());
+            var dias = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+            if (dias < 1) {
+                dias = 1;
+                txtFechaFin.SetDate(fechaini);
+            }
+            else {
+                txtDias.SetText(dias);
+            }
+
+        }
+
+    </script>
+
+    
+    
+    
+    
+    <div id="EditFormsContainer">
+    </div>    
+
+
+        <!-- BOTONERA PRINCIPAL-->
+
+     <table style="table-layout:fixed;">
+         <tr>
+            <td style="width: 90px;"> 
+                <dx:ASPxButton ID="btnNuevo" runat="server" Text="  Nuevo <br/> Contrato" OnClick="btnNuevo_click" Height="30px" Width="90px" AutoPostBack="False" UseSubmitBehavior="false" EncodeHtml="False"> 
+                    <ClientSideEvents Click="NuevoContrato" />
+                </dx:ASPxButton>
+             </td>
+
+            <td style="width: 90px; "> 
+                <dx:ASPxButton ID="btnModifica" runat="server" OnClick="btnModifica_click" Text="Modificar <br/> Contrato"  Height="30px" Width="90" AutoPostBack="False" UseSubmitBehavior="false" EncodeHtml="False">
+                    <ClientSideEvents Click="ModificaContrato" />
+                </dx:ASPxButton>
+             </td>
+
+            <td style="width: 90px; "> 
+                <dx:ASPxButton ID="btnBorra" runat="server" OnClick="btnBorra_Click" Text="Borrar<br/> Contrato"  Height="30px" Width="90px" AutoPostBack="False" UseSubmitBehavior="false" EncodeHtml="False">
+                    <ClientSideEvents Click="BorraContrato" />
+                </dx:ASPxButton>
+             </td>
+
+            <td style="width: 90px; "> 
+                <dx:ASPxButton ID="btnAsociar" runat="server" OnClick="btnAsocia_Click" Text="Asociar<br/> Contrato"  Height="30px" Width="90px" AutoPostBack="False" UseSubmitBehavior="false" EncodeHtml="False">
+                    <ClientSideEvents Click="AsociaContrato" />
+                </dx:ASPxButton>
+             </td>
+
+             </tr>
+
+     </table>
+
+        <!-- GRID SOLICITUD -->
+    <table class="dx-justification" style="table-layout:fixed;">
+        <tr>
+            <td style="height: 10px;">
+                <dx:ASPxGridView ID="gridMaster" runat="server" ClientInstanceName="masterGridView" Theme="Default" KeyFieldName="id" AutoGenerateColumns="False">   
+                    <Settings ShowHeaderFilterBlankItems="False" />
+                    <SettingsBehavior AllowFocusedRow="true" AllowSelectByRowClick="true" AllowSelectSingleRowOnly="true" />
+                       
+                    <SettingsSearchPanel Visible="True" />
+
+                    <Columns>
+                        
+                        <dx:GridViewDataTextColumn Caption="Id" FieldName="id" Name="id" ShowInCustomizationForm="True" VisibleIndex="1" Width="40px" Visible="false" >
+                            <HeaderStyle HorizontalAlign="Center" />
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Contrato" FieldName="codContrato" Name="codContrato" ShowInCustomizationForm="True" VisibleIndex="2" Width="100px">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="empUsuaria" FieldName="empUsuaria" Name="empUsuaria" ShowInCustomizationForm="True" VisibleIndex="3" Visible="False">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Unidad" FieldName="unidad" Name="unidad" ShowInCustomizationForm="True" VisibleIndex="4" Width="50px">
+                            <Settings AllowHeaderFilter="True" FilterMode="DisplayText" />
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Descripcion" FieldName="descUnidad" Name="descUnidad" VisibleIndex="5" Width="140px">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Fecha" FieldName="fecha" Name="fecha" VisibleIndex="6" Width="80px">
+                            <PropertiesTextEdit DisplayFormatString="dd-mm-yyyy">
+                            </PropertiesTextEdit>
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="codCausa" FieldName="causaLegal" Name="causaLegal" ShowInCustomizationForm="True" VisibleIndex="7" Visible="False">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Causa Legal" FieldName="descCausa" Name="descCausa" ShowInCustomizationForm="True" VisibleIndex="8" Width="140px">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="detalleCausal" FieldName="detalleCausal" Name="detalleCausal" ShowInCustomizationForm="True" VisibleIndex="9" Visible="False">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="codCargo" FieldName="cargo" Name="cargo" ShowInCustomizationForm="True" VisibleIndex="10" Visible="False">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Cargo" FieldName="descCargo" Name="descCargo" ShowInCustomizationForm="True" VisibleIndex="11" Width="140px">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Trabajadores" FieldName="cantidadTrab" Name="cantidadTrab" ShowInCustomizationForm="True" VisibleIndex="12" Width="80px">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Inicio" FieldName="fini" Name="fini" VisibleIndex="13" Width="80px">
+                            <PropertiesTextEdit DisplayFormatString="dd-mm-yyyy">
+                            </PropertiesTextEdit>
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Fin" FieldName="ffin" Name="ffin" VisibleIndex="14" Width="80px">
+                            <PropertiesTextEdit DisplayFormatString="dd-mm-yyyy">
+                            </PropertiesTextEdit>
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Dias" FieldName="cantDias" Name="cantDias" ShowInCustomizationForm="True" VisibleIndex="15" Width="40px">
+                        </dx:GridViewDataTextColumn>
+
+                        <dx:GridViewDataTextColumn Caption="Valor" FieldName="valorPagar" Name="valorPagar" ShowInCustomizationForm="True" VisibleIndex="16" Width="80px">
+                        </dx:GridViewDataTextColumn>
+
+
+                    </Columns>
+                    <Styles>
+                        <FocusedRow BackColor="#3399FF" ForeColor="White">
+                        </FocusedRow>
+                        <FixedColumn HorizontalAlign="Center">
+                        </FixedColumn>
+                    </Styles>
+                </dx:ASPxGridView>
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 17px;">
+
+                <asp:Literal ID="Literal1" runat="server"></asp:Literal>
+            </td>
+        </tr>
+        </table>
+
+
+<!-- FORMULARIO NUEVO CONTRATO -->
+    <table>
+        <tr>
+            <td>
+
+                <dx:ASPxPopupControl ID="popupContrato" runat="server" CloseAction="CloseButton"  ClientInstanceName="popupContrato" EnableViewState="False"
+                    Modal="True" Width="600px" HeaderText="Nuevo Contrato" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Theme="Metropolis" ShowPageScrollbarWhenModal="True">
+                    <ClientSideEvents PopUp="function(s, e) {  txtUnidad.Focus(); }" />
+                    <ContentCollection>
+                        <dx:PopupControlContentControl runat="server">
+                            <dx:ASPxPanel ID="PanelContrato" runat="server">
+                                <PanelCollection>
+                                <dx:PanelContent runat="server">
+                                    <table>
+
+                                         <!-- COMBOBOX UNIDAD -->
+                                        <tr>
+                                            <td rowspan="10">
+                                                <div class="pcmSideSpacer">
+
+                                                </div>
+                                            </td>
+
+                                           
+                                             <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel2" runat="server" Text="Unidad:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxComboBox ID="txtUnidad" runat="server" Width="350px" ValueType="System.String" ClientInstanceName="txtUnidad">
+                                                </dx:ASPxComboBox>
+                                            </td>
+
+                                            <td rowspan="10" style="width:10px">
+                                                <div class="pcmSideSpacer ">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- FECHA CONTRATO -->
+                                        <tr>
+
+                                            <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel15" runat="server" Text="Fecha:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxDateEdit ID="txtFecha" ClientInstanceName="txtFecha" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" MinDate="2017-01-01">
+                                                    
+                                                </dx:ASPxDateEdit>                                        
+                                            </td>
+                                        </tr>
+
+                                        <!-- COMBOBOX CAUSAL LEGAL-->
+                                        <tr>
+                                            <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel10" runat="server" Text="Causa Legal:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxComboBox ID="txtCausa" runat="server" Width="350px" ValueType="System.String" ClientInstanceName="txtCausa">
+                                                </dx:ASPxComboBox>
+                                            </td>
+
+                                       </tr>
+                                        
+                                        <!-- DETALLE CAUSA LEGAL -->
+                                        <tr>
+                                            <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel21" runat="server" Text="Detalle Causa Legal:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxMemo ID="txtDetalleCausal" runat="server"  ClientInstanceName="txtDetalleCausal" Width="350px" Height="120px">
+
+                                                </dx:ASPxMemo>
+                                            </td>
+                                         </tr>
+
+                                         <!-- COMBOBOX CARGO-->
+                                        <tr>
+                                             <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel8" runat="server" Text="Cargo:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxComboBox ID="txtCargo" runat="server" Width="350px" ValueType="System.String" ClientInstanceName="txtCargo">
+                                                </dx:ASPxComboBox>
+                                            </td>
+
+                                       </tr>
+
+                                        <!-- CANTIDAD TRABAJADORES -->
+                                       <tr>
+                                            <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel16" runat="server" Text="Cant. Trabajadores:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxSpinEdit ID="txtTrabajadores" ClientInstanceName="txtTrabajadores" Width="150px" runat="server" Number="1" MinValue="1" MaxValue="300" NumberType="Integer">
+                                                    
+                                                </dx:ASPxSpinEdit>
+
+                                            </td>
+                                        </tr>
+
+                                        <!-- FECHA INICIO -->
+                                       <tr>
+                                            <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel4" runat="server" Text="Fecha Inicio:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxDateEdit ID="txtFechaIni" ClientInstanceName="txtFechaIni" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" MinDate="2017-04-01">
+                                                    <ClientSideEvents  valueChanged="jsCalculaDias"   />
+                                                </dx:ASPxDateEdit>                                        
+                                            </td>
+                                        </tr>
+
+                                            <!-- CANTIDAD DIAS -->
+                                       <tr>
+                                            <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel5" runat="server" Text="Cant. Dias:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxSpinEdit ID="txtDias" ClientInstanceName="txtDias" runat="server" Number="1" MinValue="1" MaxValue="300" NumberType="Integer">
+                                                    <ClientSideEvents ValueChanged="jsCalculaFechaFin" />
+                                                </dx:ASPxSpinEdit>
+                                            </td>
+                                        </tr>
+
+                                            <!-- FECHA FIN -->
+                                       <tr>
+                                            <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel17" runat="server" Text="Fecha Fin:" >
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxDateEdit ID="txtFechaFin" ClientInstanceName="txtFechaFin" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" MinDate="2017-04-01">
+                                                    <ClientSideEvents  valueChanged="jsCalculaDias"   />
+                                                </dx:ASPxDateEdit>
+                                            </td>
+
+                                        </tr>
+
+
+
+                                       <!-- VALOR A PAGAR -->
+                                       <tr>
+                                            <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel12" runat="server" Text="Valor a Pagar:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxSpinEdit ID="txtValor" Width="150px" ClientInstanceName="txtValor" runat="server" Number="1" MinValue="257500" MaxValue="3000000" NumberType="Integer">
+                                                    
+                                                </dx:ASPxSpinEdit>
+                                            </td>
+                                        </tr>
+
+
+                                        <!-- BOTONES -->
+                                        <tr>
+                                            <td style="width:10px">
+                                                <div class="pcmSideSpacer ">
+                                                </div>
+                                            </td>
+                                            <td colspan="2">
+                                                <div class="pcmButton">
+                                                    <dx:ASPxButton ID="btnGrabar" runat="server" Text="Grabar" Width="80px" AutoPostBack="false" UseSubmitBehavior="false" OnClick="btnGrabar_Click" style="float:left; margin-right:8px;">
+                                                        <ClientSideEvents Click="OnClickGrabar" />                                                      
+                                                    </dx:ASPxButton> 
+
+                                                    <dx:ASPxButton ID="btnCancelar" runat="server" Text="Cancelar" Width="80px" AutoPostBack="false" UseSubmitBehavior="false" style="float:left; margin-right:8px;">
+                                                       <ClientSideEvents Click="function(s, e) { popupContrato.Hide();}" />  
+                                                    </dx:ASPxButton> 
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+                                </dx:PanelContent>
+
+
+                                </PanelCollection>
+                            </dx:ASPxPanel>
+                        </dx:PopupControlContentControl>
+                       
+                    </ContentCollection>
+                </dx:ASPxPopupControl>
+            
+            </td>
+            
+        </tr>
+    </table>
+
+<!-- FORMULARIO ASOCIA-->
+    <table>
+        <tr>
+            <td>
+
+                <dx:ASPxPopupControl ID="popupAsocia" runat="server" CloseAction="CloseButton"  ClientInstanceName="popupAsocia" EnableViewState="False"
+                    Modal="True" Width="600px" HeaderText="Asociar Contrato" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Theme="Metropolis" ShowPageScrollbarWhenModal="True">
+                    <ClientSideEvents PopUp="function(s, e) {  txtCodigoTrabajador.Focus(); }" />
+                    <ContentCollection>
+                        <dx:PopupControlContentControl runat="server">
+                            <dx:ASPxPanel ID="ASPxPanel1" runat="server">
+                                <PanelCollection>
+                                <dx:PanelContent runat="server">
+                                    <table>
+
+                                         <!-- CODIGO TRABAJADOR-->
+                                        <tr>
+                                            <td rowspan="8">
+                                                <div class="pcmSideSpacer">
+
+                                                </div>
+                                            </td>
+
+                                           
+                                             <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="ASPxLabel3" runat="server" Text="Código Trabajador:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxtextBox ID="txtCodigoTrabajador" runat="server" Width="350px" ClientInstanceName="txtCodigoTrabajador">
+                                                    </dx:ASPxtextBox>
+                                            </td>
+
+                                            <td rowspan="8" style="width:10px">
+                                                <div class="pcmSideSpacer ">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <!-- BOTONES -->
+                                        <tr>
+                                            <td style="width:10px">
+                                                <div class="pcmSideSpacer ">
+                                                </div>
+                                            </td>
+                                            <td colspan="2">
+                                                <div class="pcmButton">
+                                                    <dx:ASPxButton ID="btnOkAsociar" runat="server" Text="Ok" Width="80px" AutoPostBack="false" UseSubmitBehavior="false" OnClick="btnOkAsociar_Click" style="float:left; margin-right:8px;">
+                                                        <ClientSideEvents Click="OnClickOkAsociar" />                                                      
+                                                    </dx:ASPxButton> 
+
+                                                    <dx:ASPxButton ID="btnCancelarAsociar" runat="server" Text="Cancelar" Width="80px" AutoPostBack="false" UseSubmitBehavior="false" style="float:left; margin-right:8px;">
+                                                       <ClientSideEvents Click="function(s, e) { popupAsocia.Hide();}" />  
+                                                    </dx:ASPxButton> 
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+                                </dx:PanelContent>
+
+
+                                </PanelCollection>
+                            </dx:ASPxPanel>
+                        </dx:PopupControlContentControl>
+                       
+                    </ContentCollection>
+                </dx:ASPxPopupControl>
+            
+            </td>
+            
+        </tr>
+    </table>
+
+
+<!-- FORMULARIO GRABAR ASOCIAR-->
+    <table>
+        <tr>
+            <td>
+
+                <dx:ASPxPopupControl ID="popupGrabarAsociar" runat="server" CloseAction="CloseButton"  ClientInstanceName="popupGrabarAsociar" EnableViewState="False"
+                    Modal="True" Width="600px" HeaderText="Asociar Contrato" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Theme="Metropolis" ShowPageScrollbarWhenModal="True">
+                    <ClientSideEvents PopUp="function(s, e) {  btnCerrarAsociar.Focus(); }" />
+                    <ContentCollection>
+                        <dx:PopupControlContentControl runat="server">
+                            <dx:ASPxPanel ID="ASPxPanel2" runat="server">
+                                <PanelCollection>
+                                <dx:PanelContent runat="server">
+                                    <table>
+
+                                         <!-- DATOS -->
+                                        <tr>
+                                            <td rowspan="8">
+                                                <div class="pcmSideSpacer">
+
+                                                </div>
+                                            </td>
+
+                                           
+                                                <td class="pcmCellCaption">
+                                                <dx:ASPxLabel ID="lblEmpleado" runat="server" Text="Empleado:">
+
+                                                </dx:ASPxLabel> 
+                                            </td>
+                                            <td class="pcmCellText">
+                                                <dx:ASPxTextBox ID="txtIdEmpleado" ForeColor="#336600" Font-Bold="true"  runat="server" Width="100px" ClientInstanceName="txtIdEmpleado" ReadOnly="true">
+                                                    <border BorderStyle="None" />
+                                                </dx:ASPxTextBox>
+                                                <dx:ASPxTextBox ID="txtNombreEmpleado" ForeColor="#336600" Font-Bold="true"  runat="server" Width="350px" ClientInstanceName="txtNombreEmpleado" ReadOnly="true">
+                                                    <border BorderStyle="None" />
+                                                </dx:ASPxTextBox>
+                                            </td>
+
+                                            <td rowspan="8" style="width:10px">
+                                                <div class="pcmSideSpacer ">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <!-- BOTONES -->
+                                        <tr>
+                                            <td style="width:10px">
+                                                <div class="pcmSideSpacer ">
+                                                </div>
+                                            </td>
+                                            <td colspan="2">
+                                                <div class="pcmButton">
+                                                    <dx:ASPxButton ID="btnGrabarAsociar" runat="server" Text="Grabar" Width="80px" AutoPostBack="false" UseSubmitBehavior="false" OnClick="btnGrabarAsociar_Click" style="float:left; margin-right:8px;">
+                                                        <ClientSideEvents Click="OnClickGrabarAsociar" />                                                      
+                                                    </dx:ASPxButton> 
+
+                                                    <dx:ASPxButton ID="btnCerrarAsociar" runat="server" Text="Cancelar" Width="80px" AutoPostBack="false" UseSubmitBehavior="false" style="float:left; margin-right:8px;">
+                                                       <ClientSideEvents Click="function(s, e) { popupGrabarAsociar.Hide();}" />  
+                                                    </dx:ASPxButton> 
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+                                </dx:PanelContent>
+
+
+                                </PanelCollection>
+                            </dx:ASPxPanel>
+                        </dx:PopupControlContentControl>
+                       
+                    </ContentCollection>
+                </dx:ASPxPopupControl>
+            
+            </td>
+            
+        </tr>
+    </table>
+
+</asp:Content>

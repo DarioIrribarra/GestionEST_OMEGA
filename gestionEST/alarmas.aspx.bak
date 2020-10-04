@@ -1,0 +1,122 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/MPSistema.master" CodeBehind="alarmas.aspx.vb" Inherits="gestionEST.alarmas" %>
+
+<%@ Register assembly="DevExpress.Web.v17.1, Version=17.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="AreaCabecera" runat="server">
+</asp:Content>
+
+
+<asp:Content ID="Content2" ContentPlaceHolderID="AreaMenu" runat="server">
+     <p style=" font-family: Arial; font-size:22px; position:absolute ;left:900px;width:400px;margin-top:5px;"><b>Alarmas</b>
+        </p>
+</asp:Content>
+
+
+
+<asp:Content ID="Content3" ContentPlaceHolderID="AreaTrabajo" runat="server">
+
+    <script type="text/javascript">
+
+    function OnClickConsultaEmpresa(s, e) {
+        if (ASPxClientEdit.ValidateGroup('entryGroup')) {
+            e.processOnServer = true;
+        }
+        else {
+            e.processOnServer = false;
+        }
+    }
+
+</script>
+
+    
+    <div id="EditFormsContainer">
+    </div>  
+
+
+         <table style="width: 350px; height:15px;">
+         <tr>
+            <td style="width: 137px; text-align:right;" class="pcmCellCaption"> 
+               <dx:ASPxLabel  ID="lblUnidad" runat="server" Text="Cantidad de Días:" Theme="MetropolisBlue">
+
+               </dx:ASPxLabel> 
+             </td>
+
+            <td style="width:100px;" colspan="2">
+            
+              <dx:ASPxTextBox  ID="txtDias" runat="server" Width="100px" ClientInstanceName="txtDias" Text="30" Theme="MetropolisBlue">
+
+               </dx:ASPxTextBox>
+            </td>
+         </tr>
+         <tr>
+            <td style="width: 137px; text-align:right;" class="pcmCellCaption" > 
+                &nbsp;</td>
+
+            <td style="width: 100px; text-align:left;" class="pcmButton"  >
+                    <dx:ASPxButton style="float:left; " ID="btnConsultar" runat="server" Text="Realizar Filtro" Width="100px" AutoPostBack="False" OnClick="btnConsultaEmpresa_Click" >
+                        <ClientSideEvents Click="OnClickConsultaEmpresa" />
+                        <Image IconID="actions_apply_16x16">
+                        </Image>
+                    </dx:ASPxButton>
+                 </td>
+
+            <td style="width: 100px; " class="pcmButton"  >
+                    <dx:ASPxButton style="float:left; " ID="btnExportar" runat="server" Text="Exportar Excel" Width="100px" AutoPostBack="False" OnClick="btnExportarExcel_Click" >
+                        <Image IconID="export_exporttoxls_16x16">
+                        </Image>
+                    </dx:ASPxButton>
+                 </td>
+
+         </tr>
+             </table>
+
+    <table>
+        <tr>
+            <td style="width:10px">
+
+            </td>
+            <td>
+
+                <dx:ASPxGridView ID="gridExportar" runat="server" EnableCallBacks="False" ClientInstanceName="gridExportar" KeyFieldName="rut" AutoGenerateColumns="False">
+                    <Settings ShowFilterRow="False" />
+                    <SettingsPager EnableAdaptivity="True" PageSize="18">
+                    </SettingsPager>
+                    <Columns>
+                        <dx:GridViewCommandColumn VisibleIndex="0" Visible="false" >
+                        </dx:GridViewCommandColumn>
+                        <dx:GridViewDataTextColumn Caption="Unidad" FieldName="idUnidad" Name="idUnidad" VisibleIndex="1" Width="80px">
+                            <Settings AllowHeaderFilter="True" FilterMode="Value"  />
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn Caption="Rut" FieldName="rut" Name="rut" VisibleIndex="2" Width="100px">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn Caption="Nombre" FieldName="nombre" Name="nombre" VisibleIndex="3" Width="300px">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn Caption="Documento" FieldName="documento" Name="documento" VisibleIndex="4" Width="200px">
+                            <Settings AllowHeaderFilter="True" FilterMode="Value"  />
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn Caption="Fecha Vencimiento" FieldName="vence" Name="vence" VisibleIndex="5" Width="160px">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn Caption="Dias Vencimiento" FieldName="diasvcto" Name="diasvcto" VisibleIndex="6" Width="100px">
+                        </dx:GridViewDataTextColumn>
+                    </Columns>
+                </dx:ASPxGridView>
+
+                <br />
+
+                 <dx:ASPxGridViewExporter ID="gridExport" runat="server" GridViewID="gridExportar">
+                     <Styles>
+                         <Default Font-Names="Arial" Font-Size="Medium">
+                         </Default>
+                         <Header Font-Names="Arial" Font-Size="Medium">
+                         </Header>
+                     </Styles>
+                   
+                    </dx:ASPxGridViewExporter>
+      
+            </td>
+        </tr>
+    </table>
+
+
+
+</asp:Content>
